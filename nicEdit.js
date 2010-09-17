@@ -1223,7 +1223,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			});
 			// set the link text to the title or the url if the old text was the old title
 			if (this.ln.innerHTML == oldTitle) {
-				this.ln.innerHTML=this.inputs['title'].value || this.inuts['href'].value;
+				this.ln.innerHTML = this.inputs['title'].value || this.inputs['href'].value;
 			};
 		}
 	}
