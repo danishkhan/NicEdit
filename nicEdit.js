@@ -296,7 +296,7 @@ var nicEditors = {
 		var editors = nicEditors.editors;
 		for(var i=0;i<editors.length;i++) {
 			if(editors[i].instanceById(e)) {
-				return editors[i].instanceById(e);
+				return editors[i]; // r is an instance of nicEditorInstance therefore it does not have removeInstance or removePanel methods
 			}
 		}
 	}
