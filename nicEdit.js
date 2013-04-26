@@ -523,6 +523,8 @@ var nicEditorInstance = bkClass.extend({
 	},
 	
 	keyDown : function(e,t) {
+		this.ne.fireEvent('keyDown',this,e);
+		
 		if(e.ctrlKey) {
 			this.ne.fireEvent('key',this,e);
 		}
