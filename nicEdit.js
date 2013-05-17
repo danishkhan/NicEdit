@@ -20,7 +20,7 @@ bkClass.extend = function(def) {
   var proto = new this(bkClass);
   bkExtend(proto,def);
   classDef.prototype = proto;
-  classDef.extend = this.extend;      
+  classDef.extend = this.extend;
   return classDef;
 };
 
@@ -32,27 +32,27 @@ var bkElement = bkClass.extend({
 		elm = $BK(elm);
 		return elm;
 	},
-	
+
 	appendTo : function(elm) {
-		elm.appendChild(this);	
+		elm.appendChild(this);
 		return this;
 	},
-	
+
 	appendBefore : function(elm) {
-		elm.parentNode.insertBefore(this,elm);	
+		elm.parentNode.insertBefore(this,elm);
 		return this;
 	},
-	
+
 	addEvent : function(type, fn) {
 		bkLib.addEvent(this,type,fn);
-		return this;	
+		return this;
 	},
-	
+
 	setContent : function(c) {
 		this.innerHTML = c;
 		return this;
 	},
-	
+
 	pos : function() {
 		var curleft = curtop = 0;
 		var o = obj = this;
@@ -65,12 +65,12 @@ var bkElement = bkClass.extend({
 		var b = (!window.opera) ? parseInt(this.getStyle('border-width') || this.style.border) || 0 : 0;
 		return [curleft+b,curtop+b+this.offsetHeight];
 	},
-	
+
 	noSelect : function() {
 		bkLib.noSelect(this);
 		return this;
 	},
-	
+
 	parentTag : function(t) {
 		var elm = this;
 		 do {
@@ -81,16 +81,16 @@ var bkElement = bkClass.extend({
 		} while(elm);
 		return false;
 	},
-	
+
 	hasClass : function(cls) {
 		return this.className.match(new RegExp('(\\s|^)nicEdit-'+cls+'(\\s|$)'));
 	},
-	
+
 	addClass : function(cls) {
 		if (!this.hasClass(cls)) { this.className += " nicEdit-"+cls };
 		return this;
 	},
-	
+
 	removeClass : function(cls) {
 		if (this.hasClass(cls)) {
 			this.className = this.className.replace(new RegExp('(\\s|^)nicEdit-'+cls+'(\\s|$)'),' ');
@@ -107,7 +107,7 @@ var bkElement = bkClass.extend({
 					break;
 				case 'opacity':
 					elmStyle.opacity = st[itm];
-					elmStyle.filter = "alpha(opacity=" + Math.round(st[itm]*100) + ")"; 
+					elmStyle.filter = "alpha(opacity=" + Math.round(st[itm]*100) + ")";
 					break;
 				case 'className':
 					this.className = st[itm];
@@ -115,23 +115,23 @@ var bkElement = bkClass.extend({
 				default:
 					//if(document.compatMode || itm != "cursor") { // Nasty Workaround for IE 5.5
 						elmStyle[itm] = st[itm];
-					//}		
+					//}
 			}
 		}
 		return this;
 	},
-	
+
 	getStyle : function( cssRule, d ) {
-		var doc = (!d) ? document.defaultView : d; 
+		var doc = (!d) ? document.defaultView : d;
 		if(this.nodeType == 1)
 		return (doc && doc.getComputedStyle) ? doc.getComputedStyle( this, null ).getPropertyValue(cssRule) : this.currentStyle[ bkLib.camelize(cssRule) ];
 	},
-	
+
 	remove : function() {
 		this.parentNode.removeChild(this);
-		return this;	
+		return this;
 	},
-	
+
 	setAttributes : function(at) {
 		for(var itm in at) {
 			this[itm] = at[itm];
@@ -142,17 +142,17 @@ var bkElement = bkClass.extend({
 
 var bkLib = {
 	isMSIE : (navigator.appVersion.indexOf("MSIE") != -1),
-	
+
 	addEvent : function(obj, type, fn) {
-		(obj.addEventListener) ? obj.addEventListener( type, fn, false ) : obj.attachEvent("on"+type, fn);	
+		(obj.addEventListener) ? obj.addEventListener( type, fn, false ) : obj.attachEvent("on"+type, fn);
 	},
-	
+
 	toArray : function(iterable) {
 		var length = iterable.length, results = new Array(length);
     	while (length--) { results[length] = iterable[length] };
-    	return results;	
+    	return results;
 	},
-	
+
 	noSelect : function(element) {
 		if(element.setAttribute && element.nodeName.toLowerCase() != 'input' && element.nodeName.toLowerCase() != 'textarea') {
 			element.setAttribute('unselectable','on');
@@ -172,7 +172,7 @@ var bkLib = {
 			if(arr[i] == itm)
 				return i;
 		}
-		return null;	
+		return null;
 	},
 	cancelEvent : function(e) {
 		e = e || window.event;
@@ -225,7 +225,7 @@ var bkEvent = {
 				this.eventList[evType][i].apply(this,args);
 			}
 		}
-	}	
+	}
 };
 
 function __(s) {
@@ -236,15 +236,15 @@ Function.prototype.closure = function() {
   var __method = this, args = bkLib.toArray(arguments), obj = args.shift();
   return function() { if(typeof(bkLib) != 'undefined') { return __method.apply(obj,args.concat(bkLib.toArray(arguments))); } };
 }
-	
+
 Function.prototype.closureListener = function() {
-  	var __method = this, args = bkLib.toArray(arguments), object = args.shift(); 
-  	return function(e) { 
+  	var __method = this, args = bkLib.toArray(arguments), object = args.shift();
+  	return function(e) {
   	e = e || window.event;
   	if(e.target) { var target = e.target; } else { var target =  e.srcElement };
-	  	return __method.apply(object, [e,target].concat(args) ); 
+	  	return __method.apply(object, [e,target].concat(args) );
 	};
-}		
+}
 
 
 /* START CONFIG */
@@ -270,8 +270,8 @@ var nicEditorConfig = bkClass.extend({
 	},
 	iconsPath : '../nicEditorIcons.gif',
 	buttonList : ['save','bold','italic','underline','left','center','right','justify','ol','ul','fontSize','fontFamily','fontFormat','indent','outdent','image','upload','link','unlink','forecolor','bgcolor'],
-	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":25,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"image":21,"link":22,"unlink":23,"close":24,"arrow":26,"upload":27}
-	
+	iconList : {"xhtml":1,"bgcolor":2,"forecolor":3,"bold":4,"center":5,"hr":6,"indent":7,"italic":8,"justify":9,"left":10,"ol":11,"outdent":12,"removeformat":13,"right":14,"save":25,"strikethrough":16,"subscript":17,"superscript":18,"ul":19,"underline":20,"image":21,"link":22,"unlink":23,"close":24,"arrow":26,"upload":27},
+	initWithLineBreak: true
 });
 /* END CONFIG */
 
@@ -279,7 +279,7 @@ var nicEditorConfig = bkClass.extend({
 var nicEditors = {
 	nicPlugins : [],
 	editors : [],
-	
+
 	registerPlugin : function(plugin,options) {
 		this.nicPlugins.push({p : plugin, o : options});
 	},
@@ -291,7 +291,7 @@ var nicEditors = {
 		}
 		return nicEditors.editors;
 	},
-	
+
 	findEditor : function(e) {
 		var editors = nicEditors.editors;
 		for(var i=0;i<editors.length;i++) {
@@ -309,7 +309,7 @@ var nicEditor = bkClass.extend({
 		bkExtend(this.options,o);
 		this.nicInstances = new Array();
 		this.loadedPlugins = new Array();
-		
+
 		var plugins = nicEditors.nicPlugins;
 		for(var i=0;i<plugins.length;i++) {
 			this.loadedPlugins.push(new plugins[i].p(this,plugins[i].o));
@@ -317,12 +317,12 @@ var nicEditor = bkClass.extend({
 		nicEditors.editors.push(this);
 		bkLib.addEvent(document.body,'mousedown', this.selectCheck.closureListener(this) );
 	},
-	
+
 	panelInstance : function(e,o) {
 		e = this.checkReplace($BK(e));
 		var panelElm = new bkElement('DIV').setStyle({width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px'}).appendBefore(e);
 		this.setPanel(panelElm);
-		return this.addInstance(e,o);	
+		return this.addInstance(e,o);
 	},
 
 	checkReplace : function(e) {
@@ -344,11 +344,11 @@ var nicEditor = bkClass.extend({
 		this.nicInstances.push(newInstance);
 		return this;
 	},
-	
+
 	removeInstance : function(e) {
 		e = $BK(e);
 		var instances = this.nicInstances;
-		for(var i=0;i<instances.length;i++) {	
+		for(var i=0;i<instances.length;i++) {
 			if(instances[i].e == e) {
 				instances[i].remove();
 				this.nicInstances.splice(i,1);
@@ -360,7 +360,7 @@ var nicEditor = bkClass.extend({
 		if(this.nicPanel) {
 			this.nicPanel.remove();
 			this.nicPanel = null;
-		}	
+		}
 	},
 
 	instanceById : function(e) {
@@ -370,7 +370,7 @@ var nicEditor = bkClass.extend({
 			if(instances[i].e == e) {
 				return instances[i];
 			}
-		}	
+		}
 	},
 
 	setPanel : function(e) {
@@ -378,19 +378,19 @@ var nicEditor = bkClass.extend({
 		this.fireEvent('panel',this.nicPanel);
 		return this;
 	},
-	
-	nicCommand : function(cmd,args) {	
+
+	nicCommand : function(cmd,args) {
 		if(this.selectedInstance) {
 			this.selectedInstance.nicCommand(cmd,args);
 		}
 	},
-	
+
 	getIcon : function(iconName,options) {
 		var icon = this.options.iconList[iconName];
 		var file = (options.iconFiles) ? options.iconFiles[iconName] : '';
-		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};	
+		return {backgroundImage : "url('"+((icon) ? this.options.iconsPath : file)+"')", backgroundPosition : ((icon) ? ((icon-1)*-18) : 0)+'px 0px'};
 	},
-		
+
 	selectCheck : function(e,t) {
 		var found = false;
 		do{
@@ -403,23 +403,23 @@ var nicEditor = bkClass.extend({
 		this.selectedInstance = null;
 		return false;
 	}
-	
+
 });
 nicEditor = nicEditor.extend(bkEvent);
 
- 
+
 var nicEditorInstance = bkClass.extend({
 	isSelected : false,
-	
+
 	construct : function(e,options,nicEditor) {
 		this.ne = nicEditor;
 		this.elm = this.e = e;
 		this.options = options || {};
-		
+
 		newX = parseInt(e.getStyle('width')) || e.clientWidth;
 		newY = parseInt(e.getStyle('height')) || e.clientHeight;
 		this.initialHeight = newY-8;
-		
+
 		var isTextarea = (e.nodeName.toLowerCase() == "textarea");
 		if(isTextarea || this.options.hasPanel) {
 			var ie7s = (bkLib.isMSIE && !((typeof document.body.style.maxHeight != "undefined") && document.compatMode == "CSS1Compat"))
@@ -429,8 +429,8 @@ var nicEditorInstance = bkClass.extend({
 			var editorElm = new bkElement('DIV').setStyle({width : (newX-8)+'px', margin: '4px', minHeight : newY+'px'}).addClass('main').appendTo(this.editorContain);
 
 			e.setStyle({display : 'none'});
-				
-			editorElm.innerHTML = e.innerHTML;		
+
+			editorElm.innerHTML = e.innerHTML;
 			if(isTextarea) {
 				editorElm.setContent(e.value);
 				this.copyElm = e;
@@ -438,24 +438,24 @@ var nicEditorInstance = bkClass.extend({
 				if(f) { bkLib.addEvent( f, 'submit', this.saveContent.closure(this)); }
 			}
 			editorElm.setStyle((ie7s) ? {height : newY+'px'} : {overflow: 'hidden'});
-			this.elm = editorElm;	
+			this.elm = editorElm;
 		}
 		this.ne.addEvent('blur',this.blur.closure(this));
 
 		this.init();
 		this.blur();
 	},
-	
+
 	init : function() {
-		this.elm.setAttribute('contentEditable','true');	
-		if(this.getContent() == "") {
+		this.elm.setAttribute('contentEditable','true');
+		if(this.getContent() == "" && this.options.initWithLineBreak) {
 			this.setContent('<br />');
 		}
 		this.instanceDoc = document.defaultView;
 		this.elm.addEvent('mousedown',this.selected.closureListener(this)).addEvent('keypress',this.keyDown.closureListener(this)).addEvent('focus',this.selected.closure(this)).addEvent('blur',this.blur.closure(this)).addEvent('keyup',this.selected.closure(this));
 		this.ne.fireEvent('add',this);
 	},
-	
+
 	remove : function() {
 		this.saveContent();
 		if(this.copyElm || this.options.hasPanel) {
@@ -466,22 +466,22 @@ var nicEditorInstance = bkClass.extend({
 		this.disable();
 		this.ne.fireEvent('remove',this);
 	},
-	
+
 	disable : function() {
 		this.elm.setAttribute('contentEditable','false');
 	},
-	
+
 	getSel : function() {
-		return (window.getSelection) ? window.getSelection() : document.selection;	
+		return (window.getSelection) ? window.getSelection() : document.selection;
 	},
-	
+
 	getRng : function() {
 		var s = this.getSel();
 		if(!s) { return null; }
-		return (s.rangeCount > 0) ? s.getRangeAt(0) : 
+		return (s.rangeCount > 0) ? s.getRangeAt(0) :
 		s.createRange && s.createRange() || document.createRange();
 	},
-	
+
 	selRng : function(rng,s) {
 		if(window.getSelection) {
 			s.removeAllRanges();
@@ -490,7 +490,7 @@ var nicEditorInstance = bkClass.extend({
 			rng.select();
 		}
 	},
-	
+
 	selElm : function() {
 		var r = this.getRng();
 		if(r.startContainer) {
@@ -498,8 +498,8 @@ var nicEditorInstance = bkClass.extend({
 			if(r.cloneContents().childNodes.length == 1) {
 				for(var i=0;i<contain.childNodes.length;i++) {
 					var rng = contain.childNodes[i].ownerDocument.createRange();
-					rng.selectNode(contain.childNodes[i]);					
-					if(r.compareBoundaryPoints(Range.START_TO_START,rng) != 1 && 
+					rng.selectNode(contain.childNodes[i]);
+					if(r.compareBoundaryPoints(Range.START_TO_START,rng) != 1 &&
 						r.compareBoundaryPoints(Range.END_TO_END,rng) != -1) {
 						return $BK(contain.childNodes[i]);
 					}
@@ -510,26 +510,26 @@ var nicEditorInstance = bkClass.extend({
 			return $BK((this.getSel().type == "Control") ? r.item(0) : r.parentElement());
 		}
 	},
-	
+
 	saveRng : function() {
 		this.savedRange = this.getRng();
 		this.savedSel = this.getSel();
 	},
-	
+
 	restoreRng : function() {
 		if(this.savedRange) {
 			this.selRng(this.savedRange,this.savedSel);
 		}
 	},
-	
+
 	keyDown : function(e,t) {
 		this.ne.fireEvent('keyDown',this,e);
-		
+
 		if(e.ctrlKey) {
 			this.ne.fireEvent('key',this,e);
 		}
 	},
-	
+
 	selected : function(e,t) {
 		if(!t) {t = this.selElm()}
 		if(!e.ctrlKey) {
@@ -538,7 +538,7 @@ var nicEditorInstance = bkClass.extend({
 				if(selInstance) {
 					this.ne.fireEvent('blur',selInstance,t);
 				}
-				this.ne.selectedInstance = this;	
+				this.ne.selectedInstance = this;
 				this.ne.fireEvent('focus',selInstance,t);
 			}
 			this.ne.fireEvent('selected',selInstance,t);
@@ -547,68 +547,68 @@ var nicEditorInstance = bkClass.extend({
 		}
 		return false;
 	},
-	
+
 	blur : function() {
 		this.isFocused = false;
 		this.elm.removeClass('selected');
 	},
-	
+
 	saveContent : function() {
 		if(this.copyElm || this.options.hasPanel) {
 			this.ne.fireEvent('save',this);
 			(this.copyElm) ? this.copyElm.value = this.getContent() : this.e.innerHTML = this.getContent();
-		}	
+		}
 	},
-	
+
 	getElm : function() {
 		return this.elm;
 	},
-	
+
 	getContent : function() {
 		this.content = this.getElm().innerHTML;
 		this.ne.fireEvent('get',this);
 		return this.content;
 	},
-	
+
 	setContent : function(e) {
 		this.content = e;
 		this.ne.fireEvent('set',this);
-		this.elm.innerHTML = this.content;	
+		this.elm.innerHTML = this.content;
 	},
-	
+
 	nicCommand : function(cmd,args) {
 		document.execCommand(cmd,false,args);
-	}		
+	}
 });
 
 var nicEditorIFrameInstance = nicEditorInstance.extend({
 	savedStyles : [],
-	
-	init : function() {	
+
+	init : function() {
 		var c = this.elm.innerHTML.replace(/^\s+|\s+$/g, '');
 		this.elm.innerHTML = '';
 		(!c) ? c = "<br />" : c;
 		this.initialContent = c;
-		
+
 		this.elmFrame = new bkElement('iframe').setAttributes({'src' : 'javascript:;', 'frameBorder' : 0, 'allowTransparency' : 'true', 'scrolling' : 'no'}).setStyle({height: '100px', width: '100%'}).addClass('frame').appendTo(this.elm);
 
 		if(this.copyElm) { this.elmFrame.setStyle({width : (this.elm.offsetWidth-4)+'px'}); }
-		
+
 		var styleList = ['font-size','font-family','font-weight','color'];
 		for(itm in styleList) {
 			this.savedStyles[bkLib.camelize(itm)] = this.elm.getStyle(itm);
 		}
-     	
+
 		setTimeout(this.initFrame.closure(this),50);
 	},
-	
+
 	disable : function() {
 		this.elm.innerHTML = this.getContent();
 	},
-	
+
 	initFrame : function() {
 		var fd = $BK(this.elmFrame.contentWindow.document);
-		fd.designMode = "on";		
+		fd.designMode = "on";
 		fd.open();
 		var css = this.ne.options.externalCSS;
 		fd.write('<html><head>'+((css) ? '<link href="'+css+'" rel="stylesheet" type="text/css" />' : '')+'</head><body id="nicEditContent" style="margin: 0 !important; background-color: transparent !important;">'+this.initialContent+'</body></html>');
@@ -618,37 +618,37 @@ var nicEditorIFrameInstance = nicEditorInstance.extend({
 		this.frameWin = $BK(this.elmFrame.contentWindow);
 		this.frameContent = $BK(this.frameWin.document.body).setStyle(this.savedStyles);
 		this.instanceDoc = this.frameWin.document.defaultView;
-		
+
 		this.heightUpdate();
 		this.frameDoc.addEvent('mousedown', this.selected.closureListener(this)).addEvent('keyup',this.heightUpdate.closureListener(this)).addEvent('keydown',this.keyDown.closureListener(this)).addEvent('keyup',this.selected.closure(this));
 		this.ne.fireEvent('add',this);
 	},
-	
+
 	getElm : function() {
 		return this.frameContent;
 	},
-	
+
 	setContent : function(c) {
 		this.content = c;
 		this.ne.fireEvent('set',this);
-		this.frameContent.innerHTML = this.content;	
+		this.frameContent.innerHTML = this.content;
 		this.heightUpdate();
 	},
-	
+
 	getSel : function() {
 		return (this.frameWin) ? this.frameWin.getSelection() : this.frameDoc.selection;
 	},
-	
-	heightUpdate : function() {	
+
+	heightUpdate : function() {
 		this.elmFrame.style.height = Math.max(this.frameContent.offsetHeight,this.initialHeight)+'px';
 	},
-    
+
 	nicCommand : function(cmd,args) {
 		this.frameDoc.execCommand(cmd,false,args);
 		setTimeout(this.heightUpdate.closure(this),100);
 	}
 
-	
+
 });
 var nicEditorPanel = bkClass.extend({
 	construct : function(e,options,nicEditor) {
@@ -657,7 +657,7 @@ var nicEditorPanel = bkClass.extend({
 		this.ne = nicEditor;
 		this.panelButtons = new Array();
 		this.buttonList = bkExtend([],this.ne.options.buttonList);
-		
+
 		this.panelContain = new bkElement('DIV').setStyle({overflow : 'hidden', width : '100%', border : '1px solid #cccccc', backgroundColor : '#efefef'}).addClass('panelContain');
 		this.panelElm = new bkElement('DIV').setStyle({margin : '2px', marginTop : '0px', zoom : 1, overflow : 'hidden'}).addClass('panel').appendTo(this.panelContain);
 		this.panelContain.appendTo(e);
@@ -670,26 +670,26 @@ var nicEditorPanel = bkClass.extend({
 		this.reorder();
 		e.noSelect();
 	},
-	
+
 	addButton : function(buttonName,options,noOrder) {
 		var button = options.buttons[buttonName];
 		var type = (button['type']) ? eval('(typeof('+button['type']+') == "undefined") ? null : '+button['type']+';') : nicEditorButton;
 		var hasButton = bkLib.inArray(this.buttonList,buttonName);
 		if(type && (hasButton || this.ne.options.fullPanel)) {
 			this.panelButtons.push(new type(this.panelElm,buttonName,options,this.ne));
-			if(!hasButton) {	
+			if(!hasButton) {
 				this.buttonList.push(buttonName);
 			}
 		}
 	},
-	
+
 	findButton : function(itm) {
 		for(var i=0;i<this.panelButtons.length;i++) {
 			if(this.panelButtons[i].name == itm)
 				return this.panelButtons[i];
-		}	
+		}
 	},
-	
+
 	reorder : function() {
 		var bl = this.buttonList;
 		for(var i=0;i<bl.length;i++) {
@@ -697,15 +697,15 @@ var nicEditorPanel = bkClass.extend({
 			if(button) {
 				this.panelElm.appendChild(button.margin);
 			}
-		}	
+		}
 	},
-	
+
 	remove : function() {
 		this.elm.remove();
 	}
 });
 var nicEditorButton = bkClass.extend({
-	
+
 	construct : function(e,buttonName,options,nicEditor) {
 		this.options = options.buttons[buttonName];
 		this.name = buttonName;
@@ -717,30 +717,30 @@ var nicEditorButton = bkClass.extend({
 		this.border = new bkElement('DIV').setStyle({backgroundColor : '#efefef', border : '1px solid #efefef'}).appendTo(this.contain);
 		this.button = new bkElement('DIV').setStyle({width : '18px', height : '18px', overflow : 'hidden', zoom : 1, cursor : 'pointer'}).addClass('button').setStyle(this.ne.getIcon(buttonName,options)).appendTo(this.border);
 		this.button.addEvent('mouseover', this.hoverOn.closure(this)).addEvent('mouseout',this.hoverOff.closure(this)).addEvent('mousedown',this.mouseClick.closure(this)).noSelect();
-		
+
 		if(!window.opera) {
 			this.button.onmousedown = this.button.onclick = bkLib.cancelEvent;
 		}
-		
+
 		nicEditor.addEvent('selected', this.enable.closure(this)).addEvent('blur', this.disable.closure(this)).addEvent('key',this.key.closure(this));
-		
+
 		this.disable();
 		this.init();
 	},
-	
+
 	init : function() {  },
-	
+
 	hide : function() {
 		this.contain.setStyle({display : 'none'});
 	},
-	
+
 	updateState : function() {
 		if(this.isDisabled) { this.setBg(); }
 		else if(this.isHover) { this.setBg('hover'); }
 		else if(this.isActive) { this.setBg('active'); }
 		else { this.setBg(); }
 	},
-	
+
 	setBg : function(state) {
 		switch(state) {
 			case 'hover':
@@ -750,13 +750,13 @@ var nicEditorButton = bkClass.extend({
 				var stateStyle = {border : '1px solid #666', backgroundColor : '#ccc'};
 				break;
 			default:
-				var stateStyle = {border : '1px solid #efefef', backgroundColor : '#efefef'};	
+				var stateStyle = {border : '1px solid #efefef', backgroundColor : '#efefef'};
 		}
 		this.border.setStyle(stateStyle).addClass('button-'+state);
 	},
-	
+
 	checkNodes : function(e) {
-		var elm = e;	
+		var elm = e;
 		do {
 			if(this.options.tags && bkLib.inArray(this.options.tags,elm.nodeName)) {
 				this.activate();
@@ -778,54 +778,54 @@ var nicEditorButton = bkClass.extend({
 		this.deactivate();
 		return false;
 	},
-	
+
 	activate : function() {
 		if(!this.isDisabled) {
 			this.isActive = true;
-			this.updateState();	
+			this.updateState();
 			this.ne.fireEvent('buttonActivate',this);
 		}
 	},
-	
+
 	deactivate : function() {
 		this.isActive = false;
-		this.updateState();	
+		this.updateState();
 		if(!this.isDisabled) {
 			this.ne.fireEvent('buttonDeactivate',this);
 		}
 	},
-	
+
 	enable : function(ins,t) {
 		this.isDisabled = false;
 		this.contain.setStyle({'opacity' : 1}).addClass('buttonEnabled');
 		this.updateState();
 		this.checkNodes(t);
 	},
-	
-	disable : function(ins,t) {		
+
+	disable : function(ins,t) {
 		this.isDisabled = true;
 		this.contain.setStyle({'opacity' : 0.6}).removeClass('buttonEnabled');
-		this.updateState();	
+		this.updateState();
 	},
-	
+
 	toggleActive : function() {
-		(this.isActive) ? this.deactivate() : this.activate();	
+		(this.isActive) ? this.deactivate() : this.activate();
 	},
-	
+
 	hoverOn : function() {
 		if(!this.isDisabled) {
 			this.isHover = true;
 			this.updateState();
 			this.ne.fireEvent("buttonOver",this);
 		}
-	}, 
-	
+	},
+
 	hoverOff : function() {
 		this.isHover = false;
 		this.updateState();
 		this.ne.fireEvent("buttonOut",this);
 	},
-	
+
 	mouseClick : function() {
 		if(this.options.command) {
 			this.ne.nicCommand(this.options.command,this.options.commandArgs);
@@ -835,24 +835,24 @@ var nicEditorButton = bkClass.extend({
 		}
 		this.ne.fireEvent("buttonClick",this);
 	},
-	
+
 	key : function(nicInstance,e) {
 		if(this.options.key && e.ctrlKey && String.fromCharCode(e.keyCode || e.charCode).toLowerCase() == this.options.key) {
 			this.mouseClick();
 			if(e.preventDefault) e.preventDefault();
 		}
 	}
-	
+
 });
 
- 
+
 var nicPlugin = bkClass.extend({
-	
+
 	construct : function(nicEditor,options) {
 		this.options = options;
 		this.ne = nicEditor;
 		this.ne.addEvent('panel',this.loadPanel.closure(this));
-		
+
 		this.init();
 	},
 
@@ -869,7 +869,7 @@ var nicPlugin = bkClass.extend({
 
 
 
- 
+
  /* START CONFIG */
 var nicPaneOptions = { };
 /* END CONFIG */
@@ -879,25 +879,25 @@ var nicEditorPane = bkClass.extend({
 		this.ne = nicEditor;
 		this.elm = elm;
 		this.pos = elm.pos();
-		
+
 		this.contain = new bkElement('div').setStyle({zIndex : '99999', overflow : 'hidden', position : 'absolute', left : this.pos[0]+'px', top : this.pos[1]+'px'})
 		this.pane = new bkElement('div').setStyle({fontSize : '12px', border : '1px solid #ccc', 'overflow': 'hidden', padding : '4px', textAlign: 'left', backgroundColor : '#ffffc9'}).addClass('pane').setStyle(options).appendTo(this.contain);
-		
+
 		if(openButton && !openButton.options.noClose) {
 			this.close = new bkElement('div').setStyle({'float' : 'right', height: '16px', width : '16px', cursor : 'pointer'}).setStyle(this.ne.getIcon('close',nicPaneOptions)).addEvent('mousedown',openButton.removePane.closure(this)).appendTo(this.pane);
 		}
-		
+
 		this.contain.noSelect().appendTo(document.body);
-		
+
 		this.position();
-		this.init();	
+		this.init();
 	},
-	
+
 	init : function() { },
-	
+
 	position : function() {
 		if(this.ne.nicPanel) {
-			var panelElm = this.ne.nicPanel.elm;	
+			var panelElm = this.ne.nicPanel.elm;
 			var panelPos = panelElm.pos();
 			var newLeft = panelPos[0]+parseInt(panelElm.getStyle('width'))-(parseInt(this.pane.getStyle('width'))+8);
 			if(newLeft < this.pos[0]) {
@@ -905,37 +905,37 @@ var nicEditorPane = bkClass.extend({
 			}
 		}
 	},
-	
+
 	toggle : function() {
 		this.isVisible = !this.isVisible;
 		this.contain.setStyle({display : ((this.isVisible) ? 'block' : 'none')});
 	},
-	
+
 	remove : function() {
 		if(this.contain) {
 			this.contain.remove();
 			this.contain = null;
 		}
 	},
-	
+
 	append : function(c) {
 		c.appendTo(this.pane);
 	},
-	
+
 	setContent : function(c) {
 		this.pane.setContent(c);
 	}
-	
+
 });
 
 
- 
+
 var nicEditorAdvancedButton = nicEditorButton.extend({
-	
+
 	init : function() {
-		this.ne.addEvent('selected',this.removePane.closure(this)).addEvent('blur',this.removePane.closure(this));	
+		this.ne.addEvent('selected',this.removePane.closure(this)).addEvent('blur',this.removePane.closure(this));
 	},
-	
+
 	mouseClick : function() {
 		if(!this.isDisabled) {
 			if(this.pane && this.pane.pane) {
@@ -947,12 +947,12 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 			}
 		}
 	},
-	
+
 	addForm : function(f,elm) {
 		this.form = new bkElement('form').addEvent('submit',this.submit.closureListener(this));
 		this.pane.append(this.form);
 		this.inputs = {};
-		
+
 		for(itm in f) {
 			var field = f[itm];
 			var val = '';
@@ -963,7 +963,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				val = field['value'] || '';
 			}
 			var type = f[itm].type;
-			
+
 			if(type == 'title') {
 					new bkElement('div').setContent(field.txt).setStyle({fontSize : '14px', fontWeight: 'bold', padding : '0px', margin : '2px 0'}).appendTo(this.form);
 			} else {
@@ -971,7 +971,7 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 				if(field.txt) {
 					new bkElement('label').setAttributes({'for' : itm}).setContent(field.txt).setStyle({margin : '2px 4px', fontSize : '13px', width: '50px', lineHeight : '20px', textAlign : 'right', 'float' : 'left'}).appendTo(contain);
 				}
-				
+
 				switch(type) {
 					case 'text':
 						this.inputs[itm] = new bkElement('input').setAttributes({id : itm, 'value' : val, 'type' : 'text'}).setStyle({margin : '2px 0', fontSize : '13px', 'float' : 'left', height : '20px', border : '1px solid #ccc', overflow : 'hidden'}).setStyle(field.style).appendTo(contain);
@@ -985,15 +985,15 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 					case 'content':
 						this.inputs[itm] = new bkElement('textarea').setAttributes({id : itm}).setStyle({border : '1px solid #ccc', 'float' : 'left'}).setStyle(field.style).appendTo(contain);
 						this.inputs[itm].value = val;
-				}	
+				}
 			}
 		}
 		new bkElement('input').setAttributes({'type' : 'submit'}).setStyle({backgroundColor : '#efefef',border : '1px solid #ccc', margin : '3px 0', 'float' : 'left', 'clear' : 'both'}).appendTo(this.form);
-		this.form.onsubmit = bkLib.cancelEvent;	
+		this.form.onsubmit = bkLib.cancelEvent;
 	},
-	
+
 	submit : function() { },
-	
+
 	findElm : function(tag,attr,val) {
 		var list = this.ne.selectedInstance.getElm().getElementsByTagName(tag);
 		for(var i=0;i<list.length;i++) {
@@ -1002,14 +1002,14 @@ var nicEditorAdvancedButton = nicEditorButton.extend({
 			}
 		}
 	},
-	
+
 	removePane : function() {
 		if(this.pane) {
 			this.pane.remove();
 			this.pane = null;
 			this.ne.selectedInstance.restoreRng();
-		}	
-	}	
+		}
+	}
 });
 
 
@@ -1019,19 +1019,19 @@ var nicButtonTips = bkClass.extend({
 		nicEditor.addEvent('buttonOver',this.show.closure(this)).addEvent('buttonOut',this.hide.closure(this));
 
 	},
-	
+
 	show : function(button) {
 		this.timer = setTimeout(this.create.closure(this,button),400);
 	},
-	
+
 	create : function(button) {
 		this.timer = null;
 		if(!this.pane) {
 			this.pane = new nicEditorPane(button.button,this.ne,{fontSize : '12px', marginTop : '5px'});
 			this.pane.setContent(button.options.name);
-		}		
+		}
 	},
-	
+
 	hide : function(button) {
 		if(this.timer) {
 			clearTimeout(this.timer);
@@ -1044,7 +1044,7 @@ var nicButtonTips = bkClass.extend({
 nicEditors.registerPlugin(nicButtonTips);
 
 
- 
+
  /* START CONFIG */
 var nicSelectOptions = {
 	buttons : {
@@ -1055,57 +1055,57 @@ var nicSelectOptions = {
 };
 /* END CONFIG */
 var nicEditorSelect = bkClass.extend({
-	
+
 	construct : function(e,buttonName,options,nicEditor) {
 		this.options = options.buttons[buttonName];
 		this.elm = e;
 		this.ne = nicEditor;
 		this.name = buttonName;
 		this.selOptions = new Array();
-		
+
 		this.margin = new bkElement('div').setStyle({'float' : 'left', margin : '2px 1px 0 1px'}).appendTo(this.elm);
 		this.contain = new bkElement('div').setStyle({width: '90px', height : '20px', cursor : 'pointer', overflow: 'hidden'}).addClass('selectContain').addEvent('click',this.toggle.closure(this)).appendTo(this.margin);
 		this.items = new bkElement('div').setStyle({overflow : 'hidden', zoom : 1, border: '1px solid #ccc', paddingLeft : '3px', backgroundColor : '#fff'}).appendTo(this.contain);
 		this.control = new bkElement('div').setStyle({overflow : 'hidden', 'float' : 'right', height: '18px', width : '16px'}).addClass('selectControl').setStyle(this.ne.getIcon('arrow',options)).appendTo(this.items);
 		this.txt = new bkElement('div').setStyle({overflow : 'hidden', 'float' : 'left', width : '66px', height : '14px', marginTop : '1px', fontFamily : 'sans-serif', textAlign : 'center', fontSize : '12px'}).addClass('selectTxt').appendTo(this.items);
-		
+
 		if(!window.opera) {
 			this.contain.onmousedown = this.control.onmousedown = this.txt.onmousedown = bkLib.cancelEvent;
 		}
-		
+
 		this.margin.noSelect();
-		
+
 		this.ne.addEvent('selected', this.enable.closure(this)).addEvent('blur', this.disable.closure(this));
-		
+
 		this.disable();
 		this.init();
 	},
-	
+
 	disable : function() {
 		this.isDisabled = true;
 		this.close();
 		this.contain.setStyle({opacity : 0.6});
 	},
-	
+
 	enable : function(t) {
 		this.isDisabled = false;
 		this.close();
 		this.contain.setStyle({opacity : 1});
 	},
-	
+
 	setDisplay : function(txt) {
 		this.txt.setContent(txt);
 	},
-	
+
 	toggle : function() {
 		if(!this.isDisabled) {
 			(this.pane) ? this.close() : this.open();
 		}
 	},
-	
+
 	open : function() {
 		this.pane = new nicEditorPane(this.items,this.ne,{width : '88px', padding: '0px', borderTop : 0, borderLeft : '1px solid #ccc', borderRight : '1px solid #ccc', borderBottom : '0px', backgroundColor : '#fff'});
-		
+
 		for(var i=0;i<this.selOptions.length;i++) {
 			var opt = this.selOptions[i];
 			var itmContain = new bkElement('div').setStyle({overflow : 'hidden', borderBottom : '1px solid #ccc', width: '88px', textAlign : 'left', overflow : 'hidden', cursor : 'pointer'});
@@ -1117,29 +1117,29 @@ var nicEditorSelect = bkClass.extend({
 			}
 		}
 	},
-	
+
 	close : function() {
 		if(this.pane) {
 			this.pane = this.pane.remove();
-		}	
+		}
 	},
-	
+
 	over : function(opt) {
-		opt.setStyle({backgroundColor : '#ccc'});			
+		opt.setStyle({backgroundColor : '#ccc'});
 	},
-	
+
 	out : function(opt) {
 		opt.setStyle({backgroundColor : '#fff'});
 	},
-	
-	
+
+
 	add : function(k,v) {
-		this.selOptions.push(new Array(k,v));	
+		this.selOptions.push(new Array(k,v));
 	},
-	
+
 	update : function(elm) {
 		this.ne.nicCommand(this.options.command,elm);
-		this.close();	
+		this.close();
 	}
 });
 
@@ -1149,13 +1149,13 @@ var nicEditorFontSizeSelect = nicEditorSelect.extend({
 		this.setDisplay('Font&nbsp;Size...');
 		for(itm in this.sel) {
 			this.add(itm,'<font size="'+itm+'">'+this.sel[itm]+'</font>');
-		}		
+		}
 	}
 });
 
 var nicEditorFontFamilySelect = nicEditorSelect.extend({
 	sel : {'arial' : 'Arial','comic sans ms' : 'Comic Sans','courier new' : 'Courier New','georgia' : 'Georgia', 'helvetica' : 'Helvetica', 'impact' : 'Impact', 'times new roman' : 'Times', 'trebuchet ms' : 'Trebuchet', 'verdana' : 'Verdana'},
-	
+
 	init : function() {
 		this.setDisplay('Font&nbsp;Family...');
 		for(itm in this.sel) {
@@ -1166,7 +1166,7 @@ var nicEditorFontFamilySelect = nicEditorSelect.extend({
 
 var nicEditorFontFormatSelect = nicEditorSelect.extend({
 		sel : {'p' : 'Paragraph', 'pre' : 'Pre', 'h6' : 'Heading&nbsp;6', 'h5' : 'Heading&nbsp;5', 'h4' : 'Heading&nbsp;4', 'h3' : 'Heading&nbsp;3', 'h2' : 'Heading&nbsp;2', 'h1' : 'Heading&nbsp;1'},
-		
+
 	init : function() {
 		this.setDisplay('Font&nbsp;Format...');
 		for(itm in this.sel) {
@@ -1189,7 +1189,7 @@ var nicLinkOptions = {
 };
 /* END CONFIG */
 
-var nicLinkButton = nicEditorAdvancedButton.extend({	
+var nicLinkButton = nicEditorAdvancedButton.extend({
 	addPane : function() {
 		this.ln = this.ne.selectedInstance.selElm().parentTag('A');
 		this.addForm({
@@ -1199,7 +1199,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			'target' : {type : 'select', txt : 'Open In', options : {'' : 'Current Window', '_blank' : 'New Window'},style : {width : '100px'}}
 		},this.ln);
 	},
-	
+
 	submit : function(e) {
 		var url = this.inputs['href'].value;
 		if(url == "http://" || url == "") {
@@ -1207,7 +1207,7 @@ var nicLinkButton = nicEditorAdvancedButton.extend({
 			return false;
 		}
 		this.removePane();
-		
+
 		if(!this.ln) {
 			var tmp = 'javascript:nicTemp();';
 			this.ne.nicCommand("createlink",tmp);
@@ -1245,41 +1245,41 @@ var nicColorOptions = {
 };
 /* END CONFIG */
 
-var nicEditorColorButton = nicEditorAdvancedButton.extend({	
+var nicEditorColorButton = nicEditorAdvancedButton.extend({
 	addPane : function() {
 			var colorList = {0 : '00',1 : '33',2 : '66',3 :'99',4 : 'CC',5 : 'FF'};
 			var colorItems = new bkElement('DIV').setStyle({width: '270px'});
-			
+
 			for(var r in colorList) {
 				for(var b in colorList) {
 					for(var g in colorList) {
 						var colorCode = '#'+colorList[r]+colorList[g]+colorList[b];
-						
+
 						var colorSquare = new bkElement('DIV').setStyle({'cursor' : 'pointer', 'height' : '15px', 'float' : 'left'}).appendTo(colorItems);
 						var colorBorder = new bkElement('DIV').setStyle({border: '2px solid '+colorCode}).appendTo(colorSquare);
 						var colorInner = new bkElement('DIV').setStyle({backgroundColor : colorCode, overflow : 'hidden', width : '11px', height : '11px'}).addEvent('click',this.colorSelect.closure(this,colorCode)).addEvent('mouseover',this.on.closure(this,colorBorder)).addEvent('mouseout',this.off.closure(this,colorBorder,colorCode)).appendTo(colorBorder);
-						
+
 						if(!window.opera) {
 							colorSquare.onmousedown = colorInner.onmousedown = bkLib.cancelEvent;
 						}
 
-					}	
-				}	
+					}
+				}
 			}
-			this.pane.append(colorItems.noSelect());	
+			this.pane.append(colorItems.noSelect());
 	},
-	
+
 	colorSelect : function(c) {
 		this.ne.nicCommand('foreColor',c);
 		this.removePane();
 	},
-	
+
 	on : function(colorBorder) {
 		colorBorder.setStyle({border : '2px solid #000'});
 	},
-	
+
 	off : function(colorBorder,colorCode) {
-		colorBorder.setStyle({border : '2px solid '+colorCode});		
+		colorBorder.setStyle({border : '2px solid '+colorCode});
 	}
 });
 
@@ -1287,7 +1287,7 @@ var nicEditorBgColorButton = nicEditorColorButton.extend({
 	colorSelect : function(c) {
 		this.ne.nicCommand('hiliteColor',c);
 		this.removePane();
-	}	
+	}
 });
 
 nicEditors.registerPlugin(nicPlugin,nicColorOptions);
@@ -1299,11 +1299,11 @@ var nicImageOptions = {
 	buttons : {
 		'image' : {name : 'Add Image', type : 'nicImageButton', tags : ['IMG']}
 	}
-	
+
 };
 /* END CONFIG */
 
-var nicImageButton = nicEditorAdvancedButton.extend({	
+var nicImageButton = nicEditorAdvancedButton.extend({
 	addPane : function() {
 		this.im = this.ne.selectedInstance.selElm().parentTag('IMG');
 		this.addForm({
@@ -1313,7 +1313,7 @@ var nicImageButton = nicEditorAdvancedButton.extend({
 			'align' : {type : 'select', txt : 'Align', options : {none : 'Default','left' : 'Left', 'right' : 'Right'}}
 		},this.im);
 	},
-	
+
 	submit : function(e) {
 		var src = this.inputs['src'].value;
 		if(src == "" || src == "http://") {
@@ -1372,11 +1372,11 @@ var nicUploadOptions = {
 	buttons : {
 		'upload' : {name : 'Upload Image', type : 'nicUploadButton'}
 	}
-	
+
 };
 /* END CONFIG */
 
-var nicUploadButton = nicEditorAdvancedButton.extend({	
+var nicUploadButton = nicEditorAdvancedButton.extend({
 	nicURI : 'http://files.nicedit.com/',
 
 	addPane : function() {
@@ -1385,7 +1385,7 @@ var nicUploadButton = nicEditorAdvancedButton.extend({
 		this.requestInterval = 1000;
 		this.uri = this.ne.options.uploadURI || this.nicURI;
 		nicUploadButton.lastPlugin = this;
-					
+
 		this.myFrame = new bkElement('iframe').setAttributes({ width : '100%', height : '100px', frameBorder : 0, scrolling : 'no' }).setStyle({border : 0}).appendTo(this.pane.pane);
 		this.progressWrapper = new bkElement('div').setStyle({display: 'none', width: '100%', height: '20px', border : '1px solid #ccc'}).appendTo(this.pane.pane);
 		this.progress = new bkElement('div').setStyle({width: '0%', height: '20px', backgroundColor : '#ccc'}).setContent('&nbsp').appendTo(this.progressWrapper);
@@ -1494,20 +1494,20 @@ var nicXHTML = bkClass.extend({
 	noShort : ['style','title','script','textarea','a'],
 	cssReplace : {'font-weight:bold;' : 'strong', 'font-style:italic;' : 'em'},
 	sizes : {1 : 'xx-small', 2 : 'x-small', 3 : 'small', 4 : 'medium', 5 : 'large', 6 : 'x-large'},
-	
+
 	construct : function(nicEditor) {
 		this.ne = nicEditor;
 		if(this.ne.options.xhtml) {
 			nicEditor.addEvent('get',this.cleanup.closure(this));
 		}
 	},
-	
+
 	cleanup : function(ni) {
 		var node = ni.getElm();
 		var xhtml = this.toXHTML(node);
 		ni.content = xhtml;
 	},
-	
+
 	toXHTML : function(n,r,d) {
 		var txt = '';
 		var attrTxt = '';
@@ -1516,11 +1516,11 @@ var nicXHTML = bkClass.extend({
 		var nName = n.nodeName.toLowerCase();
 		var nChild = n.hasChildNodes && n.hasChildNodes();
 		var extraNodes = new Array();
-		
+
 		switch(nType) {
 			case 1:
 				var nAttributes = n.attributes;
-				
+
 				switch(nName) {
 					case 'b':
 						nName = 'strong';
@@ -1532,18 +1532,18 @@ var nicXHTML = bkClass.extend({
 						nName = 'span';
 						break;
 				}
-				
+
 				if(r) {
 					for(var i=0;i<nAttributes.length;i++) {
 						var attr = nAttributes[i];
-						
+
 						var attributeName = attr.nodeName.toLowerCase();
 						var attributeValue = attr.nodeValue;
-						
+
 						if(!attr.specified || !attributeValue || bkLib.inArray(this.stripAttributes,attributeName) || typeof(attributeValue) == "function") {
 							continue;
 						}
-						
+
 						switch(attributeName) {
 							case 'style':
 								var css = attributeValue.replace(/ /g,"");
@@ -1564,7 +1564,7 @@ var nicXHTML = bkClass.extend({
 								attributeValue = "";
 							break;
 						}
-						
+
 						if(attributeValue) {
 							attrTxt += ' '+attributeName+'="'+attributeValue+'"';
 						}
@@ -1577,7 +1577,7 @@ var nicXHTML = bkClass.extend({
 					for(var i=0;i<extraNodes.length;i++) {
 						txt += '<'+extraNodes[i]+'>';
 					}
-				
+
 					if(attrTxt == "" && nName == "span") {
 						r = false;
 					}
@@ -1588,9 +1588,9 @@ var nicXHTML = bkClass.extend({
 						}
 					}
 				}
-				
 
-				
+
+
 				if(!nChild && !bkLib.inArray(this.noShort,attributeName)) {
 					if(r) {
 						txt += ' />';
@@ -1599,7 +1599,7 @@ var nicXHTML = bkClass.extend({
 					if(r) {
 						txt += '>';
 					}
-					
+
 					for(var i=0;i<n.childNodes.length;i++) {
 						var results = this.toXHTML(n.childNodes[i],true,true);
 						if(results) {
@@ -1607,11 +1607,11 @@ var nicXHTML = bkClass.extend({
 						}
 					}
 				}
-					
+
 				if(r && nChild) {
 					txt += '</'+nName+'>';
 				}
-				
+
 				for(var i=0;i<extraNodes.length;i++) {
 					txt += '</'+extraNodes[i]+'>';
 				}
@@ -1623,7 +1623,7 @@ var nicXHTML = bkClass.extend({
 				//}
 				break;
 		}
-		
+
 		return txt;
 	}
 });
@@ -1637,7 +1637,7 @@ var nicBBCode = bkClass.extend({
 		if(this.ne.options.bbCode) {
 			nicEditor.addEvent('get',this.bbGet.closure(this));
 			nicEditor.addEvent('set',this.bbSet.closure(this));
-			
+
 			var loadedPlugins = this.ne.loadedPlugins;
 			for(itm in loadedPlugins) {
 				if(loadedPlugins[itm].toXHTML) {
@@ -1646,21 +1646,21 @@ var nicBBCode = bkClass.extend({
 			}
 		}
 	},
-	
+
 	bbGet : function(ni) {
 		var xhtml = this.xhtml.toXHTML(ni.getElm());
 		ni.content = this.toBBCode(xhtml);
 	},
-	
+
 	bbSet : function(ni) {
 		ni.content = this.fromBBCode(ni.content);
 	},
-	
+
 	toBBCode : function(xhtml) {
 		function rp(r,m) {
 			xhtml = xhtml.replace(r,m);
 		}
-		
+
 		rp(/\n/gi,"");
 		rp(/<strong>(.*?)<\/strong>/gi,"[b]$1[/b]");
 		rp(/<em>(.*?)<\/em>/gi,"[i]$1[/i]");
@@ -1672,15 +1672,15 @@ var nicBBCode = bkClass.extend({
 		rp(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gi,"[url=$1]$2[/url]");
 		rp(/<br.*?>/gi,"\n");
 		rp(/<.*?>.*?<\/.*?>/gi,"");
-		
+
 		return xhtml;
 	},
-	
+
 	fromBBCode : function(bbCode) {
 		function rp(r,m) {
 			bbCode = bbCode.replace(r,m);
-		}		
-		
+		}
+
 		rp(/\[b\](.*?)\[\/b\]/gi,"<strong>$1</strong>");
 		rp(/\[i\](.*?)\[\/i\]/gi,"<em>$1</em>");
 		rp(/\[u\](.*?)\[\/u\]/gi,"<span style=\"text-decoration:underline;\">$1</span>");
@@ -1691,11 +1691,11 @@ var nicBBCode = bkClass.extend({
 		rp(/\[url=(.*?)\](.*?)\[\/url\]/gi,"<a href=\"$1\">$2</a>");
 		rp(/\n/gi,"<br />");
 		//rp(/\[.*?\](.*?)\[\/.*?\]/gi,"$1");
-		
+
 		return bbCode;
 	}
 
-	
+
 });
 nicEditors.registerPlugin(nicBBCode);
 
@@ -1707,7 +1707,7 @@ nicEditor = nicEditor.extend({
                 this.addEvent('focus', this.reposition.closure(this)).addEvent('blur', this.hide.closure(this));
                 this.setPanel(this.floating);
         },
-        
+
         reposition : function() {
                 var e = this.selectedInstance.e;
                 this.floating.setStyle({ width : (parseInt(e.getStyle('width')) || e.clientWidth)+'px' });
@@ -1715,10 +1715,10 @@ nicEditor = nicEditor.extend({
                 if(top < 0) {
                         top = e.offsetTop+e.offsetHeight;
                 }
-                
+
                 this.floating.setStyle({ top : top+'px', left : e.offsetLeft+'px', display : 'block' });
         },
-        
+
         hide : function() {
                 this.floating.setStyle({ top : '-1000px'});
         }
@@ -1731,20 +1731,20 @@ var nicCodeOptions = {
 	buttons : {
 		'xhtml' : {name : 'Edit HTML', type : 'nicCodeButton'}
 	}
-	
+
 };
 /* END CONFIG */
 
 var nicCodeButton = nicEditorAdvancedButton.extend({
 	width : '350px',
-		
+
 	addPane : function() {
 		this.addForm({
 			'' : {type : 'title', txt : 'Edit HTML'},
 			'code' : {type : 'content', 'value' : this.ne.selectedInstance.getContent(), style : {width: '340px', height : '200px'}}
 		});
 	},
-	
+
 	submit : function(e) {
 		var code = this.inputs['code'].value;
 		this.ne.selectedInstance.setContent(code);
