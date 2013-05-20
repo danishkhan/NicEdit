@@ -799,7 +799,9 @@ var nicEditorButton = bkClass.extend({
 		this.isDisabled = false;
 		this.contain.setStyle({'opacity' : 1}).addClass('buttonEnabled');
 		this.updateState();
-		this.checkNodes(t);
+		if (t !== document) {
+			this.checkNodes(t);
+		}
 	},
 
 	disable : function(ins,t) {
