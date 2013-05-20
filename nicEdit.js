@@ -762,7 +762,7 @@ var nicEditorButton = bkClass.extend({
 				this.activate();
 				return true;
 			}
-		} while(elm = elm.parentNode && elm.className != "nicEdit");
+		} while((elm = elm.parentNode) && elm.className != "nicEdit");
 		elm = $BK(e);
 		while(elm.nodeType == 3) {
 			elm = $BK(elm.parentNode);
