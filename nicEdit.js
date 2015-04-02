@@ -673,7 +673,14 @@ var nicEditorPanel = bkClass.extend({
 
 	addButton : function(buttonName,options,noOrder) {
 		var button = options.buttons[buttonName];
-		var type = (button['type']) ? eval('(typeof('+button['type']+') == "undefined") ? null : '+button['type']+';') : nicEditorButton;
+		var type = null;
+
+		if (button['type']) {
+			type = typeof(window[button['type']]) == undefined ? null : window[button['type']];
+		}
+		else {
+			type = nicEditorButton;
+		}
 		var hasButton = bkLib.inArray(this.buttonList,buttonName);
 		if(type && (hasButton || this.ne.options.fullPanel)) {
 			this.panelButtons.push(new type(this.panelElm,buttonName,options,this.ne));
