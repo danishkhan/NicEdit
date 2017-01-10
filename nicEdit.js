@@ -594,7 +594,6 @@ var nicEditorInstance = bkClass.extend({
 
       editorElm.innerHTML = e.innerHTML;
       if (isTextarea) {
-        editorElm.setContent(e.value);
         this.copyElm = e;
         var f = e.parentTag('FORM');
         if (f) {
