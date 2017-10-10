@@ -4,8 +4,8 @@
   "description": "**Not a maintained project**",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
-    , "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/dulyts/nicedit/issues"
   },
-  "homepage": "https://github.com/dulyts/nicedit#readme"
+  "homepage": "https://github.com/dulyts/nicedit#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.2.3",
+    "typescript": "^2.5.3",
+    "webpack": "^3.6.0"
+  }
 }
