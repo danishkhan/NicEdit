@@ -6,15 +6,15 @@ import { AbstractPlugin } from "./plugins/abstract-plugin";
 export class NicEditorPanel {
 
 	panelButtons: AbstractPlugin[];
-	buttonList: any[];
+	// buttonList: any[];
 	panelContainer: HTMLDivElement;
 	panelElement: HTMLDivElement;
 
 	constructor(private element: HTMLElement,
-		private options: NicEditorConfig,
-		private nicEditor: NicEditor) {
+		private options: NicEditorConfig
+	) {
 		this.panelButtons = [];
-		this.buttonList = [];
+		// this.buttonList = [];
 		// this.buttonList = bkExtend([], this.nicEditor.options.buttonList);
 
 		this.panelContainer = document.createElement("div");
@@ -26,53 +26,24 @@ export class NicEditorPanel {
 		this.panelContainer.insertAdjacentElement("beforeend", this.panelElement);
 		this.element.insertAdjacentElement("beforeend", this.panelContainer);
 
-		let opt = this.nicEditor.options;
-		let buttons = opt.buttons;
-		for (let button in buttons) {
-			this.addButton(button, opt, true);
+		for (let button in this.options.buttons) {
+			this.addButton(button);
 		}
-		this.reorder();
+		this.render();
 	}
 
-	addButton(buttonName: string,
-		options: NicEditorConfig,
-		noOrder: boolean
-	) {
-		let button = options.buttons[buttonName];
-		// let type = null;
-		let type = true;
-
-		// if (button['type']) {
-		// 	type = typeof((<any>window)[button['type']]) === undefined ? null : (<any>window)[button['type']];
-		// } else {
-		// 	// type = nicEditorButton;
-		// 	console.log("not implemented yet!");
-		// }
-
-		let hasButton = this.buttonList.indexOf(buttonName) != -1;
-		if (type && (hasButton || this.nicEditor.options.fullPanel)) {
-			// this.panelButtons.push(new type(this.panelElement, buttonName, options, this.nicEditor));
-			this.panelButtons.push(button);
-			if (!hasButton) {
-				this.buttonList.push(buttonName);
-			}
-		}
-		console.log(this.panelButtons);
-	}
-
-	findButton(item: string) {
-		for (const panelButton of this.panelButtons) {
-			if (panelButton.name == item) {
-				return panelButton;
-			}
+	addButton(buttonName: string) {
+		let hasButton = this.options.buttonList.indexOf(buttonName) != -1;
+		if (hasButton || this.options.fullPanel) {
+			this.panelButtons.push(this.options.buttons[buttonName]);
 		}
 	}
 
-	reorder() {
-		for (const buttonName of this.buttonList) {
-			const button = this.findButton(buttonName);
-			if (button) {
-				this.panelElement.insertAdjacentElement("beforeend", button.button);
+	render() {
+		for (const buttonName of this.options.buttonList) {
+			let button = this.options.buttons[buttonName].button;
+			if(button) {
+				this.panelElement.insertAdjacentElement("beforeend", this.options.buttons[buttonName].button);
 			}
 		}
 	}

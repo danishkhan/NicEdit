@@ -111,8 +111,7 @@ export class NicEditor {
 	}
 
 	setPanel(element: HTMLElement) {
-		this.nicPanel = new NicEditorPanel(element, this.options, this);
+		this.nicPanel = new NicEditorPanel(element, this.options);
 		// this.fireEvent('panel', this.nicPanel);
-		return this;
 	}
 }

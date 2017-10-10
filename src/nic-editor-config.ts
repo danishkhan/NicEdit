@@ -13,4 +13,5 @@ export class NicEditorConfig {
 	buttons: IButtons = {
 		'bold': new BoldPlugin()
 	};
+	buttonList = ["bold"];
 }
