@@ -8,5 +8,4 @@ export class BoldPlugin extends AbstractPlugin {
 	constructor(){
 		super("Bold", "bold");
 	}
-
 }

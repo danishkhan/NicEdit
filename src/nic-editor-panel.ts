@@ -10,9 +10,9 @@ export class NicEditorPanel {
 	panelContainer: HTMLDivElement;
 	panelElement: HTMLDivElement;
 
-	constructor(private element: HTMLElement, 
-				private options: NicEditorConfig, 
-				private nicEditor: NicEditor) {
+	constructor(private element: HTMLElement,
+		private options: NicEditorConfig,
+		private nicEditor: NicEditor) {
 		this.panelButtons = [];
 		this.buttonList = [];
 		// this.buttonList = bkExtend([], this.nicEditor.options.buttonList);
@@ -34,9 +34,10 @@ export class NicEditorPanel {
 		this.reorder();
 	}
 
-	addButton(buttonName: string, 
-		options: NicEditorConfig, 
-		noOrder: boolean) {
+	addButton(buttonName: string,
+		options: NicEditorConfig,
+		noOrder: boolean
+	) {
 		let button = options.buttons[buttonName];
 		// let type = null;
 		let type = true;
@@ -60,24 +61,17 @@ export class NicEditorPanel {
 	}
 
 	findButton(item: string) {
-		for (let i = 0; i < this.panelButtons.length; i++) {
-			if (this.panelButtons[i].name == item) {
-				return this.panelButtons[i];
+		for (const panelButton of this.panelButtons) {
+			if (panelButton.name == item) {
+				return panelButton;
 			}
 		}
 	}
 
 	reorder() {
-		console.log("reorder");
-		console.log(this.buttonList);
-		let bl = this.buttonList;
-		for (let i = 0; i < bl.length; i++) {
-			let button = this.findButton(bl[i]);
-			console.log("new button");
-			console.log(button);
+		for (const buttonName of this.buttonList) {
+			const button = this.findButton(buttonName);
 			if (button) {
-			// 	this.panelElement.appendChild(button.margin);
-				// button.button.insertAdjacentElement("beforeend", this.panelElement);
 				this.panelElement.insertAdjacentElement("beforeend", button.button);
 			}
 		}
