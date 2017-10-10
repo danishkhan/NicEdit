@@ -6,6 +6,6 @@ export class BoldPlugin extends AbstractPlugin {
 	get arguments() { return []; }
 
 	constructor(){
-		super("Bold", "bold");
+		super("Bold");
 	}
 }
