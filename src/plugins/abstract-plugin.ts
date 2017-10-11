@@ -24,29 +24,18 @@ export abstract class AbstractPlugin {
 	}
 
 	createButton(options: NicEditorConfig): HTMLElement {
-		this.component = document.createElement("div");
-		this.component.style.cssFloat = "left";
-		this.component.style.marginTop = "2px";
-
-		let contain = document.createElement("div");
-		contain.style.width = "20px";
-		contain.style.height = "20px";
-		contain.className = "buttonContain";
-		this.component.insertAdjacentElement("afterbegin", contain);
+		// this.component = document.createElement("div");
 		let border = document.createElement("div");
-		border.style.backgroundColor = "#efefef";
-		border.style.border = "1px solid #efefef";
+		this.component = border;
 		border.className = "button-border";
-		contain.insertAdjacentElement("afterbegin", border);
+		// this.component.insertAdjacentElement("afterbegin", border);
 		let button = document.createElement("button");
 		button.className = "button tooltip";
 		button.addEventListener("click", (e:Event) => {
-			console.log("asd");
-			console.log(this.command);
-			console.log(this.arguments);
-			console.log(this.run());
+			this.run();
 		});
-		border.insertAdjacentElement("afterbegin", button);
+		// border.insertAdjacentElement("afterbegin", button);
+		this.component = button;
 		this.setIcon(options, button);
 
 		let tooltip = document.createElement("span");
@@ -54,16 +43,6 @@ export abstract class AbstractPlugin {
 		tooltip.innerText = this._title;
 		button.insertAdjacentElement("afterbegin", tooltip);
 		return this.component;
-		// let button2 = document.createElement("button");
-		// button2.style.width = "18px";
-		// button2.style.height = "18px";
-		// button2.addEventListener("click", (e:Event) => {
-		// 	console.log("asd");
-		// 	console.log(this.command);
-		// 	console.log(this.arguments);
-		// 	console.log(this.run());
-		// });
-		// return button2;
 	}
 
 	private setIcon(options: NicEditorConfig, button: HTMLElement) {

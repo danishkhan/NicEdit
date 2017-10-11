@@ -2,14 +2,31 @@
 * Main entry point for library styles.
 */
 
-.button-border {
-	backgroundColor: #efefef;
-	border: 1px solid #efefef;
+.panel {
+	overflow: hidden;
+	width: 100%;
+	border: 1px solid #cccccc;
+	background-color: #efefef;
+	zoom: 1;
+	padding: 2px;
 }
 
-.button-border :hover{
+.button-border {
+	width: 20px;
+	height: 20px;
+	background-color: #efefef;
+	border: 1px solid #efefef;
+	float: left;
+}
+
+.button-border:active{
 	border: 1px solid #666;
-	backgroundColor: #ddd;
+	background-color: #ccc;
+}
+
+.button-border:hover{
+	border: 1px solid #666;
+	background-color: #ddd;
 }
 
 .button {
