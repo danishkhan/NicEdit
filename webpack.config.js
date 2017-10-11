@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 function root(args) {
   args = Array.prototype.slice.call(arguments, 0);
@@ -8,15 +8,22 @@ function root(args) {
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: [
-        "./src/main.ts"
-        , "./assets/scss/styles.scss"
-    ],
+    // entry: [
+    //     "./src/main.ts"
+    //     , "./src/assets/scss/styles.scss"
+    // ],
+    entry: {
+        NicEdit: "./src/main.ts"
+        , style: "./src/assets/scss/styles.scss"
+    },
     output: {
-        filename: "[name].js",
-        path: __dirname + "/dist/",
+        // filename: "[name].js",
+        filename: "[name].bundle.js",
+        chunkFilename: "[id].bundle.js",
+        path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'var',
-        library: 'NicEdit'
+        library: '[name]'
+        // library: 'NicEdit'
     },
 
     resolve: {
@@ -25,7 +32,7 @@ module.exports = {
 
     plugins: [
         new CopyWebpackPlugin([{
-            from: root('assets')
+            from: root('src', 'assets')
         }])
     ],
 
