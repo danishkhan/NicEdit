@@ -7,8 +7,8 @@ export class NicEditorPanel {
 
 	panelButtons: AbstractPlugin[];
 	// buttonList: any[];
-	panelContainer: HTMLDivElement;
-	panelElement: HTMLDivElement;
+	// panelContainer: HTMLDivElement;
+	// panelElement: HTMLDivElement;
 
 	constructor(private element: HTMLElement,
 		private options: NicEditorConfig
@@ -32,9 +32,9 @@ export class NicEditorPanel {
 		// this.panelContainer.insertAdjacentElement("beforeend", this.panelElement);
 		// this.element.insertAdjacentElement("beforeend", this.panelContainer);
 
-		this.panelElement = document.createElement("div");
-		this.panelElement.className += "panel";
-		this.element.insertAdjacentElement("beforeend", this.panelElement);
+		// this.panelElement = document.createElement("div");
+		// this.panelElement.className += "panel";
+		// this.element.insertAdjacentElement("beforeend", this.panelElement);
 
 		for (let button in this.options.buttons) {
 			this.addButton(button);
@@ -44,18 +44,15 @@ export class NicEditorPanel {
 
 	addButton(buttonName: string) {
 		let button = this.options.buttons[buttonName];
-		let hasButton = this.options.buttonList.indexOf(buttonName) != -1;
+		let hasButton = this.options.buttonList.indexOf(buttonName) != -1
 		if (hasButton || this.options.fullPanel) {
 			this.panelButtons.push(button);
 		}
 	}
 
 	render() {
-		for (const buttonName of this.options.buttonList) {
-			let button = this.options.buttons[buttonName];
-			if(button) {
-				this.panelElement.insertAdjacentElement("beforeend", button.createButton(this.options));
-			}
+		for (const button of this.panelButtons) {
+			this.element.insertAdjacentElement("beforeend", button.createButton(this.options));
 		}
 	}
 

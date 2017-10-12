@@ -62,16 +62,14 @@ export class NicEditor {
 			// };
 			// s[(ie7s) ? 'height' : 'maxHeight'] = (this._options.maxHeight) ? this._options.maxHeight + 'px' : null;
 			this.editorContainer = document.createElement('div')
-			this.editorContainer.setAttribute("style", "width: "+newX+"px; border: 1px solid #ccc; border-top: 0; overflow-y: auto; overflow-x: hidden")
+			this.editorContainer.className = "editorContainer";
 			this.element.insertAdjacentElement("beforebegin", this.editorContainer);
 
 			let editorElm = document.createElement('div')
-			// editorElm.setAttribute("style", "width: "+(newX - 8)+"px; margin: 4px; min-height: "+newY+"px")
-			editorElm.setAttribute("style", "width: "+(newX-8)+"px; padding: 4px; min-height: "+newY+"px")
-			editorElm.setAttribute("class", "main")
+			editorElm.className = "editorElement";
 			this.editorContainer.insertAdjacentElement("afterbegin", editorElm);
 
-			this.element.setAttribute("style", "display: none");
+			this.element.className = "originalElement";
 
 			editorElm.innerHTML = this.element.innerHTML;
 			// if (isTextarea) {
@@ -91,16 +89,10 @@ export class NicEditor {
 
 
 		this.element.setAttribute('contentEditable', 'true');
-
-
-		//panel instance
-		// e = this.checkReplace($BK(e));
-
 		var panelElm = document.createElement("div");
-		panelElm.setAttribute("style", "width: " + (this.editorContainer.style.width ? parseInt(this.editorContainer.style.width, 10) : this.element.clientWidth) + "px;");
+		panelElm.className = "panelElement";
 		this.editorContainer.insertAdjacentElement("afterbegin", panelElm);
 		this.setPanel(panelElm);
-		// return this.addInstance(this.element, o);
 	}
 
 	getSel(): Selection {

@@ -1,5 +1,4 @@
-import { AbstractPlugin } from "./plugins/abstract-plugin";
-import { BoldPlugin } from "./plugins/bold-plugin";
+import { AbstractPlugin, BoldPlugin, ItalicPlugin, UnderlinePlugin } from "./plugins/";
 
 export interface IButtons {
 	[key: string]: AbstractPlugin;
@@ -17,9 +16,11 @@ export class NicEditorConfig {
 	fullPanel = true;
 	maxHeight = 500;
 	buttons: IButtons = {
-		'bold': new BoldPlugin()
+		'bold': new BoldPlugin(),
+		'italic': new ItalicPlugin(),
+		'underline': new UnderlinePlugin()
 	};
-	buttonList = [ "bold" ];
+	buttonList = [ "bold", "italic" ];
 	iconsPath = '../nicEditorIcons.gif';
 	iconList: IIconList = {
 		"xhtml": 1,
