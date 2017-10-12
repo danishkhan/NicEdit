@@ -30,18 +30,22 @@ export abstract class AbstractPlugin {
 		border.className = "button-border";
 		// this.component.insertAdjacentElement("afterbegin", border);
 		let button = document.createElement("button");
-		button.className = "button tooltip";
+		button.className = "button has-tooltip";
 		button.addEventListener("click", (e:Event) => {
 			this.run();
 		});
-		// border.insertAdjacentElement("afterbegin", button);
-		this.component = button;
+		border.insertAdjacentElement("afterbegin", button);
+		// this.component = button;
 		this.setIcon(options, button);
 
+		let tooltipWrapper = document.createElement("span");
+		tooltipWrapper.className = "tooltip-wrapper";
+		button.insertAdjacentElement("afterbegin", tooltipWrapper);
+
 		let tooltip = document.createElement("span");
-		tooltip.className = "tooltiptext";
+		tooltip.className = "tooltip";
 		tooltip.innerText = this._title;
-		button.insertAdjacentElement("afterbegin", tooltip);
+		tooltipWrapper.insertAdjacentElement("afterbegin", tooltip);
 		return this.component;
 	}
 
