@@ -8,3 +8,4 @@ Project is a member of the [OSS Manifesto](http://ossmanifesto.org/)
 
 **TODO
 * Only typescript
+* Separate buttons in plugin files
