@@ -10,3 +10,4 @@ Project is a member of the [OSS Manifesto](http://ossmanifesto.org/)
 * Only typescript
 * Separate buttons in plugin files
 * Angular X wrapper in separate repo
+* Testing
