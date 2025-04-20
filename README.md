@@ -2,4 +2,4 @@
 
 Lightweight, Cross Platform WYSIWYG editor.
 
-Project is a member of the [OSS Manifesto](http://ossmanifesto.org/)
+Project is a member of the [OSS Manifesto](https://danishkhan.github.io/ossmanifesto/)
